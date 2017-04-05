@@ -14,8 +14,14 @@ def info_owner():
 
 info_owner()
 def get_user_by_username(user_name):
-    url_user=BASE_URL+"users/{"+user_name+"}/?access_token="+tokken_for_access_app
+    url_user=BASE_URL+"users/search?q="+user_name+"&access_token="+tokken_for_access_app #https://api.instagram.com/v1/users/search?q=jack&access_token=ACCESS-TOKEN
     user_info= requests.get(url_user).json()
-    print user_info
+    return user_info["data"][0]["id"]
 
-get_user_by_username("yashika3990")
+def get_user_post(user_id):
+    user_id1= get_user_by_username(user_id)
+    url_user1=BASE_URL+"users/"+user_id1+"/media/recent/?access_token="+tokken_for_access_app#https://api.instagram.com/v1/users/{user-id}/media/recent/?access_token=ACCESS-TOKEN
+    request_for_user=requests.get(url_user1).json()
+    print request_for_user
+get_user_post("yashika3990")
+
