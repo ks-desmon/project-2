@@ -18,10 +18,33 @@ def get_user_by_username(user_name):
     user_info= requests.get(url_user).json()
     return user_info["data"][0]["id"]
 
-def get_user_post(user_id):
-    user_id1= get_user_by_username(user_id)
+def get_user_post_id(username):
+    user_id1= get_user_by_username(username)
     url_user1=BASE_URL+"users/"+user_id1+"/media/recent/?access_token="+tokken_for_access_app#https://api.instagram.com/v1/users/{user-id}/media/recent/?access_token=ACCESS-TOKEN
-    request_for_user=requests.get(url_user1).json()
-    print request_for_user
-get_user_post("yashika3990")
+    request_for_user_to_get_all_post=requests.get(url_user1).json()
+    return request_for_user_to_get_all_post["data"][0]['id']
+
+def like_on_user_post_id(user_id):
+    user_current_post_id=get_user_post_id(user_id)
+    Access_token={'access_token':tokken_for_access_app}
+    url_post_like= BASE_URL+"media/"+user_current_post_id+"/likes"
+    requests.post(url_post_like,Access_token).json()
+
+def comment_on_user_id(user_id):
+    user_current_post_id=get_user_post_id(user_id)
+    Access_token_Plus_comment ={'access_token':tokken_for_access_app,'text':"hey its my first comment for u using python"}
+    url_post_comment= BASE_URL+"/media/"+user_current_post_id+"/comments"
+    comment= requests.post(url_post_comment,Access_token_Plus_comment).json()
+    print comment
+
+
+like_on_user_post_id("amritbirsingh345")
+comment_on_user_id("amritbirsingh345")
+
+
+
+
+
+
+
 
