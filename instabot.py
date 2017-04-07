@@ -7,9 +7,9 @@ BASE_URL = "https://api.instagram.com/v1/"
 
 def funn_is_successful_or_not(sucess):#is is going to check and tell the operation performed is successful or not
     if sucess == 200:
-        print "successsfully done "
+        print "your choice successsfully done "
     else:
-        print "unsucsessfull"
+        print "sry unsucsessfull make sure ur all inputs are correct"
 
 
 #using get to collect owner information
