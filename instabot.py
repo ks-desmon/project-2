@@ -49,12 +49,6 @@ def get_user_post_id(username,post_number):
         print "unsucsessfull plz check user name again"
     return request_for_user_to_get_all_post["data"][i]['id']
 
-def get_user_post_id_for_getting_comment_id(username):
-    user_id1= get_user_by_username(username)
-    url_user1=BASE_URL+"users/"+user_id1+"/media/recent/?access_token="+tokken_for_access_app#https://api.instagram.com/v1/users/{user-id}/media/recent/?access_token=ACCESS-TOKEN
-    request_for_user_to_get_all_post=requests.get(url_user1).json()
-    sucess = request_for_user_to_get_all_post["meta"]["code"]
-    return request_for_user_to_get_all_post["data"][0]['id']
 
 #this funn is use to do like on users post_id which is getting from  funn <<<user_post_id>>>
 def like_on_user_post_id(user_id,post_number):
@@ -75,12 +69,13 @@ def comment_on_user_id(user_id,entered_comment,post_number):
     sucess = comment_result["meta"]["code"]
     funn_is_successful_or_not(sucess)# checking is that operation is successfl or not..
 
-def get__commentid(username):
-    get_post_id=get_user_post_id_for_getting_comment_id(username)
-    Url_for_getting_comment_id =BASE_URL+"media/"+get_post_id+"/comments?access_token ="+tokken_for_access_app
+#funn is to get all recent comment on a perticular post
+def get__commentid(username,post_number):
+    get_post_id=get_user_post_id(username,post_number)
+    Url_for_getting_comment_id =BASE_URL+"media/"+get_post_id+"/comments?access_token="+tokken_for_access_app
     comment_id=requests.get(Url_for_getting_comment_id).json()
-    print comment_id
-get__commentid("amritbirsingh345")
+    for i in range (0,len (comment_id["data"]),1):
+        print comment_id['data'][i]['text']
 
 def fun_main():
     info_owner()
@@ -90,7 +85,7 @@ def fun_main():
         print "hey enter user name from following : amritbirsingh345 : yashika3990 "
         user_name= raw_input()
         if user_name in list:                       #checking entered user is valid or not..
-            print "what u want to do : for comment press 1: for like press 2"
+            print "what u want to do : for comment press 1:For like press 2:For delete comment :3For checking recent comment on post"
             input = raw_input()
             print input
             if input =="1":
@@ -108,11 +103,20 @@ def fun_main():
             elif input =="2":
                 print "we have latest five posts of user on which you want to like ?? 0 , 1 , 2 , 3 , 4"
                 post_number = raw_input()
+                list2 = ["0", "1", "2", "3", "4"]  # giving choice to user to chose between no of choice
                 if post_number in list2:
                     like_on_user_post_id(user_name,post_number)
                     print "thanks your liked user post"
                 else:
                     print "your choice is wrong"
+            elif input =="3":
+                print "we have latest five posts of user on which you want to like ?? 0 , 1 , 2 , 3 , 4"
+                post_number = raw_input()
+                list2 = ["0", "1", "2", "3", "4"]  # giving choice to user to chose between no of choice
+                if post_number in list2:
+                    get__commentid(user_name,post_number)
+                else:
+                    print "opps wrong choice"
             else:
                 print "wrong input"
         else:
@@ -120,14 +124,4 @@ def fun_main():
         print "you want to do again press y of not press any other key"
         Variable1=raw_input()
 
-#fun_main()
-
-
-
-
-
-
-
-
-
-
+fun_main()
