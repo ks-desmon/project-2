@@ -74,8 +74,12 @@ def get__commentid(username,post_number):
     get_post_id=get_user_post_id(username,post_number)
     Url_for_getting_comment_id =BASE_URL+"media/"+get_post_id+"/comments?access_token="+tokken_for_access_app
     comment_id=requests.get(Url_for_getting_comment_id).json()
+    List_of_comments=[]
     for i in range (0,len (comment_id["data"]),1):
-        print comment_id['data'][i]['text']
+        list=comment_id['data'][i]['text']
+        List_of_comments.append(list)
+    return List_of_comments
+
 
 def fun_main():
     info_owner()
@@ -85,7 +89,7 @@ def fun_main():
         print "hey enter user name from following : amritbirsingh345 : yashika3990 "
         user_name= raw_input()
         if user_name in list:                       #checking entered user is valid or not..
-            print "what u want to do : for comment press 1:For like press 2:For delete comment :3For checking recent comment on post"
+            print "what u want to do : for comment press 1:For like press 2:For delete comment :3For search comment on post"
             input = raw_input()
             print input
             if input =="1":
@@ -114,7 +118,7 @@ def fun_main():
                 post_number = raw_input()
                 list2 = ["0", "1", "2", "3", "4"]  # giving choice to user to chose between no of choice
                 if post_number in list2:
-                    get__commentid(user_name,post_number)
+                    print get__commentid(user_name,post_number)
                 else:
                     print "opps wrong choice"
             else:
