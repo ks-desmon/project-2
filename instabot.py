@@ -49,6 +49,12 @@ def get_user_post_id(username,post_number):
         print "unsucsessfull plz check user name again"
     return request_for_user_to_get_all_post["data"][i]['id']
 
+def get_user_post_id_for_getting_comment_id(username):
+    user_id1= get_user_by_username(username)
+    url_user1=BASE_URL+"users/"+user_id1+"/media/recent/?access_token="+tokken_for_access_app#https://api.instagram.com/v1/users/{user-id}/media/recent/?access_token=ACCESS-TOKEN
+    request_for_user_to_get_all_post=requests.get(url_user1).json()
+    sucess = request_for_user_to_get_all_post["meta"]["code"]
+    return request_for_user_to_get_all_post["data"][0]['id']
 
 #this funn is use to do like on users post_id which is getting from  funn <<<user_post_id>>>
 def like_on_user_post_id(user_id,post_number):
@@ -68,6 +74,13 @@ def comment_on_user_id(user_id,entered_comment,post_number):
     comment_result=requests.post(url_post_comment,Access_token_Plus_comment).json()
     sucess = comment_result["meta"]["code"]
     funn_is_successful_or_not(sucess)# checking is that operation is successfl or not..
+
+def get__commentid(username):
+    get_post_id=get_user_post_id_for_getting_comment_id(username)
+    Url_for_getting_comment_id =BASE_URL+"media/"+get_post_id+"/comments?access_token ="+tokken_for_access_app
+    comment_id=requests.get(Url_for_getting_comment_id).json()
+    print comment_id
+get__commentid("amritbirsingh345")
 
 def fun_main():
     info_owner()
@@ -107,7 +120,7 @@ def fun_main():
         print "you want to do again press y of not press any other key"
         Variable1=raw_input()
 
-fun_main()
+#fun_main()
 
 
 
