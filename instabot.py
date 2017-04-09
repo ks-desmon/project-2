@@ -73,13 +73,54 @@ def comment_on_user_id(user_name):
     else:
         print "unsucsessfull plz try again"
 
+
+def search_comment_id(user_name):
+    post_id=get_user_post_id(user_name)
+    print "type content related to comment"
+    search=raw_input()
+    recent_comments=BASE_URL+"media/"+post_id+"/comments?access_token="+tokken_for_access_app
+    recent_comments=requests.get(recent_comments).json()
+    for i in range (0,len (recent_comments["data"]),1):
+        if search in recent_comments['data'][i]['text']:
+            print "comment is found ::"
+            print recent_comments ['data'][i]['text']
+            return recent_comments['data'][i]['id']
+        else:
+            print "commnet is not found"
+            return
+#search_comment_id("amritbirsingh345")
+
+def search_comment_id(user_name):
+    post_id=get_user_post_id(user_name)
+    print "type content related to comment"
+    search=raw_input()
+    recent_comments=BASE_URL+"media/"+post_id+"/comments?access_token="+tokken_for_access_app
+    recent_comments=requests.get(recent_comments).json()
+    for i in range (0,len (recent_comments["data"]),1):
+        print recent_comments["data"][i]["text"]
+search_comment_id("amritbirsingh345")
+
+
+def delete_comment(user_name):
+        media_id = get_user_post_id(user_name)
+        comment_id = search_comment_id(user_name)
+        sucess = BASE_URL+"/media/"+media_id+"/comments/"+comment_id+"?access_token="+tokken_for_access_app.json()
+        print sucess
+        if sucess == 200:  # checking url
+            print " successsfully commented on the pic "
+        else:
+            print "unsucsessfull plz try again"
+
+
+
+
 #selecting user name
-Variable1 ="y"
+'''Variable1 ="y"
 while Variable1 =="y":
     info_owner()                                            # calling funn to print owner information
     print"hey type the username from following \n  amritbirsingh345  \n  yashika3990 "
     user_name = raw_input()
-    print"select what do you want to do 1:like 2:comment"
+    print"select what do you want to do 1:like 2:comment 3:search 4:delete"
     choice=raw_input()
     if choice=="1":
         like_on_user_post_id(user_name)
@@ -89,4 +130,4 @@ while Variable1 =="y":
         print"you chose wrong"
 
     print"press any key for exit or press y to continue"
-    Variable1=raw_input()
+    Variable1=raw_input()'''
