@@ -91,12 +91,9 @@ def search_comment_id(user_name):
 
 def delete_comment(user_name):
         media_id = get_user_post_id(user_name)
-        print media_id
         comment_id = search_comment_id(user_name)
-        print comment_id
-
         #https://api.instagram.com/v1/media/1486120579122616804_2338013941/comments/17876833795018201?access_token=1993495056.1b2b25a.bbdc1be8c2364ab181433835f5c37520
-        sucess1 = BASE_URL+"/media/"+media_id+"/comments/"+comment_id+"?access_token="+tokken_for_access_app
+        sucess1 = BASE_URL+"media/"+media_id+"/comments/"+comment_id+"?access_token="+tokken_for_access_app
         sucess=requests.delete(sucess1)
         print sucess
         if sucess == 200:  # checking url
