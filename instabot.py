@@ -37,7 +37,7 @@ def get_user_post_id(username):
     for post_no in range(0,len(request_for_user_to_get_all_post["data"]),1):
         post_no
     exact_posts=str(post_no)
-    print 'we have total '+exact_posts+'posts of  :'+username+'\n which post you want to chose'
+    print 'we have total '+exact_posts+'posts of :'+username+'\n which post you want to chose'
     post_no=raw_input()
     i=int(post_no)
     if sucess == 200:
@@ -84,20 +84,19 @@ def search_comment_id(user_name):
         if search in recent_comments['data'][i]['text']:
             print "comment is found ::"
             print recent_comments ['data'][i]['text']
-            return recent_comments['data'][i]['id']
+            return recent_comments['data'][i]['id'],post_id
     else:
         print "comment is not found"
         return
 
-def delete_comment(user_name):
-        media_id = get_user_post_id(user_name)
-        comment_id = search_comment_id(user_name)
+def delete_comment(user_name,media_id):
+        comment_id,media_id = search_comment_id(user_name)
         #https://api.instagram.com/v1/media/1486120579122616804_2338013941/comments/17876833795018201?access_token=1993495056.1b2b25a.bbdc1be8c2364ab181433835f5c37520
         sucess1 = BASE_URL+"media/"+media_id+"/comments/"+comment_id+"?access_token="+tokken_for_access_app
-        sucess=requests.delete(sucess1)
-        print sucess
+        sucess=requests.delete(sucess1)["meta"]["code"]
+
         if sucess == 200:  # checking url
-            print " successsfully commented on the pic "
+            print "successsfully commented on the pic "
         else:
             print "unsucsessfull plz try again"
 
@@ -117,7 +116,8 @@ while Variable1 =="y":
     elif choice=="3":
         search_comment_id(user_name)
     elif choice== '4':
-        delete_comment(user_name)
+        media_id=get_user_post_id(user_name)
+        delete_comment(user_name,media_id)
     else:
         print"you chose wrong"
 
